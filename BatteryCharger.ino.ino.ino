@@ -1,9 +1,8 @@
 //Alex Cooley
-//Updated 12/6/2021
+//Updated 6/12/2022
 //Arduino Based Power Supply Unit
-//ARDBAPSU Version 1.0
-//Configuration 1.3
-
+//ARDBAPSU Version 1.1
+//Configuration 1.4
 
 #include <Wire.h> //I2C Library
 #include <LiquidCrystal_I2C.h> //LCD I2C Library
@@ -48,16 +47,6 @@ void setup(){
   lcd.setCursor(7,3);
   lcd.print("Supply");
   delay(2500);
-
-  digitalWrite(Alarm,HIGH);
-
-  lcd.clear();
-  lcd.backlight();
-  lcd.setCursor(7,1);
-  lcd.print("Alarm");
-  lcd.setCursor(7,2);
-  lcd.print("Test");
-  delay(5000);
   
   lcd.clear();
   lcd.backlight();
@@ -78,6 +67,16 @@ void setup(){
   lcd.setCursor(7,3);
   lcd.print("Cooley");
   delay(2500);
+
+  digitalWrite(Alarm,HIGH);
+
+  lcd.clear();
+  lcd.backlight();
+  lcd.setCursor(7,1);
+  lcd.print("Alarm");
+  lcd.setCursor(7,2);
+  lcd.print("Test");
+  delay(5000);
 
   digitalWrite(Relay, HIGH);
   digitalWrite(Alarm, LOW);
@@ -124,10 +123,12 @@ void loop(){
 
    if(ina260.readCurrent()>= 4500){
     digitalWrite(Alarm,HIGH);
+    digitalWrite(Relay, LOW);
     delay(1000);
    }
    else{
     digitalWrite(Alarm,LOW);
+    digitalWrite(Relay,HIGH);
    }
    
 }
